@@ -1,9 +1,9 @@
-//POST to a simple list
+//Render Views
 var express = require('express');
 var app = express();
-
-
 var myList = []; 
+
+app.set("view engine", "ejs"); //this line sets our view engine as ejs. it's almost in plain english!
 
 app.get('*', function(req, res){ 
   var responseString = "Currently, the list have:", i;
@@ -16,12 +16,11 @@ app.get('*', function(req, res){
 app.use(express.bodyParser());
 
 app.post('*', function(req, res){ 
-  //req.body['some-name'] corresponds to sending an HTML form with a field of the same name
-  if (req.body['item']){ //first we check for existance
-    myList.push(req.body['item']); //if it exists (i.e. the previous expression is not `undefined` we append to our list
-    res.send(200); //and send a response saying "OK" (http code 200)
+  if (req.body['item']){ 
+    myList.push(req.body['item']); 
+    res.send(200); 
   } else {
-    res.send(400); //if we encountered an error we respond by saying that the request was bad (code 400)
+    res.send(400); 
   }
 });
 
