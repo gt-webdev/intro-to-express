@@ -1,23 +1,28 @@
-//GET a simple list
+//POST to a simple list
 var express = require('express');
 var app = express();
 
-var myList = ["stop", "hammer", "time"]; //we instantiate an empty list.
-//notice that the list is not instantiated within a function so it's global
+
+var myList = []; 
 
 app.get('*', function(req, res){ 
-  //now we want to display the list 
   var responseString = "Currently, the list have:", i;
   for (i=0; i<myList.length; i+=1){
     responseString += "\n" + myList[i];
   }
   res.send(responseString); 
-  //the crude and simple way
-  //res.send(myList); 
 });
 
-app.post('*', function(req, res){ //identical to the above example, but for POST requests
-  res.send('Thank you for POSTting my page.'); //this is where we respond with a simple message
+app.use(express.bodyParser());
+
+app.post('*', function(req, res){ 
+  //req.body['some-name'] corresponds to sending an HTML form with a field of the same name
+  if (req.body['item']){ //first we check for existance
+    myList.push(req.body['item']); //if it exists (i.e. the previous expression is not `undefined` we append to our list
+    res.send(200); //and send a response saying "OK" (http code 200)
+  } else {
+    res.send(400); //if we encountered an error we respond by saying that the request was bad (code 400)
+  }
 });
 
 app.listen(8080);
