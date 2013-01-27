@@ -4,11 +4,9 @@ var app = express();
 var myList = []; 
 
 app.use(express.bodyParser());
-app.set("view engine", "ejs"); //this line sets our view engine as ejs. it's almost in plain english!
+app.set("view engine", "ejs"); 
 
 app.get('*', function(req, res){
-  // the res.render() function takes the name of the view (excluding the .ejs) 
-  // and an object containing all the variables used in our view and their values
   res.render("show_list",{title: "my list",
               mylist: myList});
 });
@@ -17,7 +15,7 @@ app.get('*', function(req, res){
 app.post('*', function(req, res){ 
   if (req.body['item']){ 
     myList.push(req.body['item']); 
-    res.send(200); 
+    res.redirect(req.url); //this function sends a response that causes the browser to switch to a GET with the same URL
   } else {
     res.send(400); 
   }
