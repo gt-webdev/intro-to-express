@@ -1,4 +1,4 @@
-//Render Views
+//final list app
 var express = require('express');
 var app = express();
 var myList = []; 
@@ -15,7 +15,7 @@ app.get('*', function(req, res){
 app.post('*', function(req, res){ 
   if (req.body['item']){ 
     myList.push(req.body['item']); 
-    res.redirect(req.url); //this function sends a response that causes the browser to switch to a GET with the same URL
+    res.redirect(req.url); 
   } else {
     res.send(400); 
   }
