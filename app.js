@@ -2,6 +2,7 @@
 var express = require('express');
 var app = express();
 
+app.use(express.bodyParser());
 
 var myList = []; 
 
@@ -12,8 +13,6 @@ app.get('*', function(req, res){
   }
   res.send(responseString); 
 });
-
-app.use(express.bodyParser());
 
 app.post('*', function(req, res){ 
   //req.body['some-name'] corresponds to sending an HTML form with a field of the same name
